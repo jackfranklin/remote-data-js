@@ -30,7 +30,7 @@ class RemoteData {
     parse = x => x.json(),
     fetchOptions = {},
     stateData
-  }) {
+  } = {}) {
     this.state = state;
     this.url = url;
     this.onSuccess = onSuccess;
@@ -79,13 +79,13 @@ class RemoteData {
   }
 
   fetch(...args) {
-    const url = this.url(...args);
+    const reqUrl = typeof this.url === 'function' ? this.url(...args) : this.url;
     this.preFetch(new RemoteData({
       ...this.config(),
       state: PENDING
     }));
 
-    return fetch(url, this.fetchOptions = {})
+    return fetch(reqUrl, this.fetchOptions = {})
       .then(checkStatus)
       .then(this.parse)
       .then(data => {
