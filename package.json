@@ -1,12 +1,13 @@
 {
   "name": "remote-data-js",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "",
   "main": "lib/index.js",
   "scripts": {
     "build-umd": "webpack --config webpack/webpack.umd.config.js",
     "build-cjs": "babel src -d lib",
     "build-all": "npm run build-umd && npm run build-cjs",
+    "prepublish": "npm run build-all",
     "test": "tape -r babel-register test/*-test.js | faucet",
     "test-watch": "tape-watch -r babel-register test/*-test.js -p faucet"
   },
