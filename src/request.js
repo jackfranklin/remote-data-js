@@ -38,7 +38,7 @@ const parseAndKeepResponse = parseFn => result => {
 export const makeFetchRequest = (remoteDataInstance, url) => {
   return fetch(url, remoteDataInstance.fetchOptions)
     .then(checkStatus)
-    .then(parseAndKeepResponse(remoteDataInstance.parse.bind(remoteDataInstance)))
+    .then(parseAndKeepResponse(remoteDataInstance.parse))
     .then(([rawResponse, data]) => successfulResponse(remoteDataInstance, rawResponse, data))
     .catch(error => failureResponse(remoteDataInstance, error.response, error));
 }
