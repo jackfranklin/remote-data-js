@@ -1,0 +1,5 @@
+export const NOT_ASKED = 'REMOTE_DATA_NOT_ASKED';
+export const PENDING = 'REMOTE_DATA_PENDING';
+export const FAILURE = 'REMOTE_DATA_FAILURE';
+export const SUCCESS = 'REMOTE_DATA_SUCCESS';
+
