@@ -4,6 +4,10 @@ Inspired by Kris Jenkins' [RemoteData](http://package.elm-lang.org/packages/kris
 
 [![Build Status](https://travis-ci.org/jackfranklin/remote-data-js.svg?branch=master)](https://travis-ci.org/jackfranklin/remote-data-js)
 
+```
+npm install --save remote-data-js
+```
+
 ## Motivations
 
 By representing the data and the state of the request in one object it becomes impossible for you to have data that's out of sync.
