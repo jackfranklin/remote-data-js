@@ -59,6 +59,10 @@ githubPerson.fetch('jackfranklin').then((remoteData) => {
 });
 ```
 
+## JSBin Example
+
+You can also [view this JSBin example](http://jsbin.com/xetecikeni/edit?js,output) which shows how to use `RemoteData`.
+
 ## API
 
 ### Creating `RemoteData` instances
