@@ -121,6 +121,32 @@ You can call any of the following methods:
 - `isFailure()`
 - `isSuccess()`
 
+You can "switch" on a RemoteData instance's state similarly to functional languages and the JavaScript [Union Type](https://www.npmjs.com/package/union-type) package:
+
+```js
+githubPerson.fetch('jackfranklin').then(data => {
+  const message = data.case({
+    NotAsked: () => 'Initializing...',
+    Pending: () => 'Loading...',
+    Success: (data) => renderData(data),
+    Failure: (error) => renderError(error)
+  });
+});
+```
+
+If you don't handle all four possible states, you must include a default handler named `_`
+(underscore):
+
+```js
+githubPerson.fetch('jackfranklin').then(data => {
+  const message = data.case({
+    Success: (data) => renderData(data),
+    Failure: (error) => renderError(error),
+    _: () => 'Loading...'
+  });
+});
+```
+
 You can call `.data` on a request to access the data, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
 
 You can call `.response` on a request to access the response, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
