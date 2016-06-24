@@ -31,8 +31,8 @@ test('When given a URL function it is used for the request', t => {
   resetAndMockSuccess('api.com/1');
 
   const instance = new RemoteData({
-    url: x => `api.com/${x}`
-  })
+    url: x => `api.com/${x}`,
+  });
 
   instance.fetch('1').then(() => {
     t.ok(fetchMock.called('api.com/1'));
@@ -43,7 +43,7 @@ test('When given a URL as a string it will be used', t => {
   t.plan(1);
   resetAndMockSuccess('api.com/1');
   const instance = new RemoteData({
-    url: 'api.com/1'
+    url: 'api.com/1',
   });
 
   instance.fetch('1').then(() => {
@@ -57,7 +57,7 @@ test('for a successful request, onChange is called twice', t => {
   const onChange = Double.function();
   const instance = new RemoteData({
     url: 'api.com/1',
-    onChange
+    onChange,
   });
 
   instance.fetch().then(() => {
@@ -72,7 +72,7 @@ test('for a failed request, onChange is called twice', t => {
   const onChange = Double.function();
   const instance = new RemoteData({
     url: 'api.com/1',
-    onChange
+    onChange,
   });
 
   instance.fetch().then(() => {
@@ -100,7 +100,7 @@ test('A custom parse function can be used for non JSON responses', t => {
   resetAndMockWithResponse('api.com/1', 'Hello World');
   const instance = new RemoteData({
     url: 'api.com/1',
-    parse: x => x.text()
+    parse: x => x.text(),
   });
 
   return instance.fetch().then(result => {
@@ -111,7 +111,6 @@ test('A custom parse function can be used for non JSON responses', t => {
 test('You can also access response to get the raw HTTP response', t => {
   t.plan(2);
   resetAndMockWithResponse('api.com/1', { some: 'json' });
-  const onChange = Double.function();
   const instance = new RemoteData({
     url: 'api.com/1',
   });
@@ -120,13 +119,12 @@ test('You can also access response to get the raw HTTP response', t => {
     t.deepEqual(result.data, { some: 'json' });
     t.equal(result.response.status, 200);
   }).catch(e => console.log(e));
-
 });
 
 test('Accessing the response throws if the request hasn\'t finished', t => {
   t.plan(1);
   const instance = new RemoteData({
-    url: 'api.com/1'
+    url: 'api.com/1',
   });
 
   t.throws(() => instance.response, /Cannot get response for request that hasn't finished/);
@@ -135,7 +133,7 @@ test('Accessing the response throws if the request hasn\'t finished', t => {
 test('Accessing data throws if the state isn\'t finished', t => {
   t.plan(1);
   const instance = new RemoteData({
-    url: 'api.com/1'
+    url: 'api.com/1',
   });
 
   t.throws(() => instance.data, /Cannot get data for request that hasn't finished/);

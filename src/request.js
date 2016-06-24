@@ -1,6 +1,6 @@
 import {
   FAILURE,
-  SUCCESS
+  SUCCESS,
 } from './states';
 
 const checkStatus = response => {
@@ -11,29 +11,30 @@ const checkStatus = response => {
     error.response = response;
     throw error;
   }
-}
+};
 
 const dataResponse = (remoteDataInstance, rawResponse, data, isError) => {
   return remoteDataInstance.makeNewAndOnChange({
     state: isError ? FAILURE : SUCCESS,
     stateData: data,
-    rawResponse
+    rawResponse,
   });
-}
+};
 
 const successfulResponse = (remoteDataInstance, rawResponse, data) => {
   return dataResponse(remoteDataInstance, rawResponse, data, false);
-}
+};
+
 const failureResponse = (remoteDataInstance, rawResponse, data) => {
   return dataResponse(remoteDataInstance, rawResponse, data, true);
-}
+};
 
 const parseAndKeepResponse = parseFn => result => {
   return Promise.all([
     Promise.resolve(result),
-    Promise.resolve(parseFn(result))
+    Promise.resolve(parseFn(result)),
   ]);
-}
+};
 
 export const makeFetchRequest = (remoteDataInstance, url) => {
   return fetch(url, remoteDataInstance.fetchOptions)
@@ -41,4 +42,4 @@ export const makeFetchRequest = (remoteDataInstance, url) => {
     .then(parseAndKeepResponse(remoteDataInstance.parse))
     .then(([rawResponse, data]) => successfulResponse(remoteDataInstance, rawResponse, data))
     .catch(error => failureResponse(remoteDataInstance, error.response, error));
-}
+};

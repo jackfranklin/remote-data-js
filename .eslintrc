@@ -1,0 +1,11 @@
+{
+  "extends": "standard",
+  "globals": {
+    "fetch": true
+  },
+  "rules": {
+    "semi": [2, "always"],
+    "space-before-function-paren": 0,
+    "comma-dangle": [2, "always-multiline"]
+  }
+}

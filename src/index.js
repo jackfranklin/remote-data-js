@@ -2,7 +2,7 @@ import {
   NOT_ASKED,
   PENDING,
   FAILURE,
-  SUCCESS
+  SUCCESS,
 } from './states';
 
 import { makeFetchRequest } from './request';
@@ -15,7 +15,7 @@ class RemoteData {
     parse = x => x.json(),
     fetchOptions = {},
     rawResponse,
-    stateData
+    stateData,
   } = {}) {
     this.state = state;
     this.url = url;
@@ -28,10 +28,15 @@ class RemoteData {
 
   config() {
     const keys = [
-      'onSuccess', 'onFailure', 'parse', 'fetchOptions', 'state', 'url'
+      'onSuccess',
+      'onFailure',
+      'parse',
+      'fetchOptions',
+      'state',
+      'url',
     ];
     const config = {};
-    keys.forEach(k => config[k] = this[k]);
+    keys.forEach(k => { config[k] = this[k]; });
     return config;
   }
 
@@ -74,7 +79,7 @@ class RemoteData {
   makeNewAndOnChange(opts = {}) {
     const newRemoteData = new this.constructor({
       ...this.config(),
-      ...opts
+      ...opts,
     });
 
     this.onChange(newRemoteData);
