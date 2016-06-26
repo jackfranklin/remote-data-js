@@ -43,12 +43,12 @@ class RemoteData {
   case(map) {
     // Caller must supply a handler for every case OR supply a default handler named _.
     if (process.env.NODE_ENV !== 'production' && typeof map._ !== 'function') {
-      const handlers = ['NotAsked', 'Pending', 'Failure', 'Success']
+      const handlers = ['NotAsked', 'Pending', 'Failure', 'Success'];
       handlers.forEach((name) => {
         if (typeof map[name] !== 'function') {
           throw new Error(`RemoteData: ${name} handler missing`);
         }
-      })
+      });
     }
 
     switch (this.state) {

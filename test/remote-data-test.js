@@ -142,7 +142,7 @@ test('Accessing data throws if the state isn\'t finished', t => {
 test('case method calls NotAsked callback', t => {
   t.plan(1);
   const instance = new RemoteData({
-    url: 'api.com/1'
+    url: 'api.com/1',
   });
 
   instance.case({
@@ -151,7 +151,7 @@ test('case method calls NotAsked callback', t => {
     },
     Pending: t.fail.bind(t, 'Pending must not be called'),
     Failure: t.fail.bind(t, 'Failure must not be called'),
-    Success: t.fail.bind(t, 'Success must not be called')
+    Success: t.fail.bind(t, 'Success must not be called'),
   });
 });
 
@@ -159,7 +159,7 @@ test('case method calls Success callback', t => {
   t.plan(1);
   resetAndMockSuccess('api.com/1');
   const instance = new RemoteData({
-    url: 'api.com/1'
+    url: 'api.com/1',
   });
 
   instance.fetch().then(result => {
@@ -169,7 +169,7 @@ test('case method calls Success callback', t => {
       Failure: t.fail.bind(t, 'and does not call Failure'),
       Success (data) {
         t.deepEqual(data, {success: true}, 'which receives API data');
-      }
+      },
     });
   }).catch(e => console.log(e));
 });
@@ -177,11 +177,11 @@ test('case method calls Success callback', t => {
 test('case method calls Pending callback', t => {
   t.plan(1);
   resetAndMockSuccess('api.com/1');
-  let count = 0
+  let count = 0;
   const instance = new RemoteData({
     url: 'api.com/1',
     onChange(remoteData) {
-      if (count++ > 0) return
+      if (count++ > 0) return;
 
       remoteData.case({
         NotAsked: t.fail.bind(t, 'and does not call NotAsked'),
@@ -189,9 +189,9 @@ test('case method calls Pending callback', t => {
           t.equal(nothing, undefined, 'which does not receive parameter');
         },
         Failure: t.fail.bind(t, 'and does not call Failure'),
-        Success: t.fail.bind(t, 'and does not call Success')
+        Success: t.fail.bind(t, 'and does not call Success'),
       });
-    }
+    },
   });
   instance.fetch();
 });
@@ -199,7 +199,7 @@ test('case method calls Pending callback', t => {
 test('case method calls Failure callback', t => {
   t.plan(1);
   resetAndMockError('api.com/1');
-  let count = 0
+  let count = 0;
   const instance = new RemoteData({
     url: 'api.com/1',
     onChange(remoteData) {
@@ -211,9 +211,9 @@ test('case method calls Failure callback', t => {
         Failure(error) {
           t.equal(error.response.status, 404, 'which receives raw error response');
         },
-        Success: t.fail.bind(t, 'and does not call Success')
+        Success: t.fail.bind(t, 'and does not call Success'),
       });
-    }
+    },
   });
   instance.fetch();
 });
@@ -226,7 +226,7 @@ test('case method calls the default callback', t => {
     url: 'api.com/1',
   });
   instance.case({
-    _: handler
+    _: handler,
   });
   t.equal(handler.args.length, 1, '`_` is called once');
-})
+});
