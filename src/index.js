@@ -40,6 +40,30 @@ class RemoteData {
     return config;
   }
 
+  case(map) {
+    // Caller must supply a handler for every case OR supply a default handler named _.
+    if (process.env.NODE_ENV !== 'production' && typeof map._ !== 'function') {
+      const handlers = ['NotAsked', 'Pending', 'Failure', 'Success'];
+      handlers.forEach((name) => {
+        if (typeof map[name] !== 'function') {
+          throw new Error(`RemoteData: ${name} handler missing`);
+        }
+      });
+    }
+
+    switch (this.state) {
+      case NOT_ASKED:
+        return (map.NotAsked ? map.NotAsked : map._)();
+      case PENDING:
+        return (map.Pending ? map.Pending : map._)();
+      case FAILURE:
+        return (map.Failure ? map.Failure : map._)(this.stateData);
+      case SUCCESS:
+        return (map.Success ? map.Success : map._)(this.stateData);
+    }
+    throw new Error(`RemoteData: Bad internal state '${this.state}'`);
+  }
+
   isFinished() {
     return this.isFailure() || this.isSuccess();
   }
