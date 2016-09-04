@@ -19,6 +19,14 @@ const resetAndMockWithResponse = (url, response) => {
   fetchMock.mock(url, response);
 };
 
+const makeInstance = (obj = {}) => {
+  const args = Object.assign({}, {
+    url: 'api.com/1',
+  }, obj);
+
+  return new RemoteData(args);
+};
+
 it('Is NOT_ASKED by default', () => {
   expect(new RemoteData().isNotAsked()).toBe(true);
 });
@@ -27,7 +35,7 @@ describe('defining the URL', () => {
   it('uses a url if it is given one', () => {
     resetAndMockSuccess('api.com/1');
 
-    const instance = new RemoteData({
+    const instance = makeInstance({
       url: x => `api.com/${x}`,
     });
 
@@ -38,9 +46,7 @@ describe('defining the URL', () => {
 
   it('uses a string if given a string', () => {
     resetAndMockSuccess('api.com/1');
-    const instance = new RemoteData({
-      url: 'api.com/1',
-    });
+    const instance = makeInstance();
 
     return instance.fetch('1').then(() => {
       expect(fetchMock.called('api.com/1')).toBe(true);
@@ -51,10 +57,7 @@ describe('defining the URL', () => {
 it('calls onChange twice when there is a successful request', () => {
   resetAndMockSuccess('api.com/1');
   const onChange = jest.fn();
-  const instance = new RemoteData({
-    url: 'api.com/1',
-    onChange,
-  });
+  const instance = makeInstance({ onChange });
 
   return instance.fetch().then(() => {
     expect(onChange.mock.calls[0][0].isPending()).toBe(true);
@@ -65,10 +68,7 @@ it('calls onChange twice when there is a successful request', () => {
 it('calls onChange twice for a failed request', () => {
   resetAndMockError('api.com/1');
   const onChange = jest.fn();
-  const instance = new RemoteData({
-    url: 'api.com/1',
-    onChange,
-  });
+  const instance = makeInstance({ onChange });
 
   return instance.fetch().then(() => {
     expect(onChange.mock.calls[0][0].isPending()).toBe(true);
@@ -78,9 +78,7 @@ it('calls onChange twice for a failed request', () => {
 
 it('parses as JSON by default', () => {
   resetAndMockWithResponse('api.com/1', { some: 'json' });
-  const instance = new RemoteData({
-    url: 'api.com/1',
-  });
+  const instance = makeInstance();
 
   return instance.fetch().then(result => {
     expect(result.data).toEqual({ some: 'json' });
@@ -89,10 +87,7 @@ it('parses as JSON by default', () => {
 
 it('allows a custom parser function to be provided', () => {
   resetAndMockWithResponse('api.com/1', 'Hello World');
-  const instance = new RemoteData({
-    url: 'api.com/1',
-    parse: x => x.text(),
-  });
+  const instance = makeInstance({ parse: x => x.text() });
 
   return instance.fetch().then(result => {
     expect(result.data).toEqual('Hello World');
@@ -101,9 +96,7 @@ it('allows a custom parser function to be provided', () => {
 
 it('provides `response` to allow access to the raw HTTP response', () => {
   resetAndMockWithResponse('api.com/1', { some: 'json' });
-  const instance = new RemoteData({
-    url: 'api.com/1',
-  });
+  const instance = makeInstance();
 
   return instance.fetch().then(result => {
     expect(result.data).toEqual({ some: 'json' });
@@ -112,9 +105,7 @@ it('provides `response` to allow access to the raw HTTP response', () => {
 });
 
 it('throws if you access the response when the request is not finished', () => {
-  const instance = new RemoteData({
-    url: 'api.com/1',
-  });
+  const instance = makeInstance();
 
   expect(() => instance.response).toThrowError(
     /Cannot get response for request that hasn't finished/
@@ -122,9 +113,7 @@ it('throws if you access the response when the request is not finished', () => {
 });
 
 it('throws if you try to access the data before it has been fetched', () => {
-  const instance = new RemoteData({
-    url: 'api.com/1',
-  });
+  const instance = makeInstance();
 
   expect(() => instance.data).toThrowError(
     /Cannot get data for request that hasn't finished/
@@ -133,9 +122,7 @@ it('throws if you try to access the data before it has been fetched', () => {
 
 describe('the case method', () => {
   it('first calls the NotAsked callback', () => {
-    const instance = new RemoteData({
-      url: 'api.com/1',
-    });
+    const instance = makeInstance();
 
     const notAsked = jest.fn();
     const otherFn = jest.fn();
@@ -153,9 +140,7 @@ describe('the case method', () => {
 
   it('calls the success callback when data has been fetched', () => {
     resetAndMockSuccess('api.com/1');
-    const instance = new RemoteData({
-      url: 'api.com/1',
-    });
+    const instance = makeInstance();
 
     const successFn = jest.fn();
     const otherFn = jest.fn();
@@ -203,9 +188,7 @@ describe('the case method', () => {
   it('calls the failure callback when the request failed', () => {
     resetAndMockError('api.com/1');
 
-    const instance = new RemoteData({
-      url: 'api.com/1',
-    });
+    const instance = makeInstance();
 
     const failedFn = jest.fn();
     const otherFn = jest.fn();
@@ -226,9 +209,7 @@ describe('the case method', () => {
   it('will call the default callback if none match', () => {
     resetAndMockError('api.com/1');
     const handler = jest.fn();
-    const instance = new RemoteData({
-      url: 'api.com/1',
-    });
+    const instance = makeInstance();
 
     instance.case({
       _: handler,
@@ -237,5 +218,3 @@ describe('the case method', () => {
     expect(handler).toBeCalled();
   });
 });
-
-
