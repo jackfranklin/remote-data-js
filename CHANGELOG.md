@@ -1,3 +1,6 @@
+### 0.2.1 - 5th Sept 2016
+- ensure `onChange` is kept when a new instance is created
+
 ### 0.2.0 - 5th Sept 2016
 - `case` statement support
 - tests refactored to use Jest
