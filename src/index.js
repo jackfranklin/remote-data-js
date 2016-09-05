@@ -34,6 +34,7 @@ class RemoteData {
       'fetchOptions',
       'state',
       'url',
+      'onChange',
     ];
     const config = {};
     keys.forEach(k => { config[k] = this[k]; });

@@ -217,4 +217,18 @@ describe('the case method', () => {
 
     expect(handler).toBeCalled();
   });
+
+  it('copies the onChange event over when a new remote data instance is created', () => {
+    const onChange = jest.fn();
+    const instance = makeInstance({
+      onChange,
+    });
+
+    resetAndMockSuccess('api.com/1');
+
+    return instance.fetch().then((newInstance) => {
+      expect(onChange.mock.calls.length).toBe(2);
+      expect(newInstance.onChange).toBe(onChange);
+    });
+  });
 });
