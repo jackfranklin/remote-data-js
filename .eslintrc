@@ -1,7 +1,11 @@
 {
   "extends": "standard",
   "globals": {
-    "fetch": true
+    "fetch": true,
+    "describe": true,
+    "it": true,
+    "expect": true,
+    "jest": true
   },
   "rules": {
     "semi": [2, "always"],
