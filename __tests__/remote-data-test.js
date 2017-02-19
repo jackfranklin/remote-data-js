@@ -232,3 +232,41 @@ describe('the case method', () => {
     });
   });
 });
+
+describe('.all', () => {
+  it('returns the failing remotedata when one fails', () => {
+    resetAndMockSuccess('api.com/1');
+    mockError('api.com/2');
+    const onChange1 = jest.fn();
+    const onChange2 = jest.fn();
+    const onChange = jest.fn();
+
+    const first = new RemoteData({ url: 'api.com/1', onChange: onChange1 });
+    const second = new RemoteData({ url: 'api.com/2', onChange: onChange2 });
+
+    return RemoteData.all([first.fetch(), second.fetch()], { onChange }).then((newInstance) => {
+      expect(onChange1.mock.calls.length).toBe(2);
+      expect(onChange2.mock.calls.length).toBe(2);
+      expect(onChange.mock.calls.length).toBe(1);
+
+      expect(newInstance.isSuccess()).toBe(false);
+    });
+  });
+
+  it('is successful with an array of the responses', () => {
+    resetAndMockSuccess('api.com/1');
+    mockSuccess('api.com/2');
+    const first = new RemoteData({ url: 'api.com/1' });
+    const second = new RemoteData({ url: 'api.com/2' });
+
+    const onChange = jest.fn();
+
+    return RemoteData.all([first.fetch(), second.fetch()], { onChange }).then((newInstance) => {
+      expect(onChange.mock.calls.length).toBe(1);
+
+      expect(newInstance.isSuccess()).toBe(true);
+      expect(newInstance.data).toEqual([{ success: true }, { success: true }]);
+      expect(newInstance.response.length).toBe(2);
+    });
+  });
+});

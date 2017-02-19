@@ -116,4 +116,21 @@ class RemoteData {
   }
 }
 
+RemoteData.all = (promises, {
+  onChange,
+  mergeStateData = remoteDatas => remoteDatas.map(instance => instance.data),
+  mergeResponse = remoteDatas => remoteDatas.map(instance => instance.response),
+}) => {
+  return Promise.all(promises).then((remoteDatas) => {
+    const state = remoteDatas.every(instance => instance.isSuccess()) ? SUCCESS : FAILURE;
+
+    const instance = new RemoteData({ onChange });
+    return instance.makeNewAndOnChange({
+      state,
+      rawResponse: mergeResponse(remoteDatas),
+      stateData: mergeStateData(remoteDatas),
+    });
+  });
+};
+
 export default RemoteData;
