@@ -11,7 +11,7 @@
     "jest": "jest",
     "test": "npm run lint && npm run jest",
     "watch": "npm run jest -- --watch",
-    "lint": "eslint src/*.js test/*.js"
+    "lint": "eslint src/*.js __tests__/*.js"
   },
   "keywords": [],
   "author": "Jack Franklin",
