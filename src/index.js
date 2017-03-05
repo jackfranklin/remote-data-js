@@ -3,9 +3,9 @@ import {
   PENDING,
   FAILURE,
   SUCCESS,
-} from './states';
+} from './states'
 
-import { makeFetchRequest } from './request';
+import { makeFetchRequest } from './request'
 
 class RemoteData {
   constructor({
@@ -17,13 +17,13 @@ class RemoteData {
     rawResponse,
     stateData,
   } = {}) {
-    this.state = state;
-    this.url = url;
-    this.onChange = onChange;
-    this.parse = parse;
-    this.fetchOptions = fetchOptions;
-    this.stateData = stateData;
-    this.rawResponse = rawResponse;
+    this.state = state
+    this.url = url
+    this.onChange = onChange
+    this.parse = parse
+    this.fetchOptions = fetchOptions
+    this.stateData = stateData
+    this.rawResponse = rawResponse
   }
 
   config() {
@@ -35,10 +35,10 @@ class RemoteData {
       'state',
       'url',
       'onChange',
-    ];
-    const config = {};
-    keys.forEach(k => { config[k] = this[k]; });
-    return config;
+    ]
+    const config = {}
+    keys.forEach(k => { config[k] = this[k] })
+    return config
   }
 
   // the default implementations here call through to the _ function
@@ -52,49 +52,49 @@ class RemoteData {
   }) {
     switch (this.state) {
       case NOT_ASKED:
-        return NotAsked();
+        return NotAsked()
       case PENDING:
-        return Pending();
+        return Pending()
       case FAILURE:
-        return Failure(this.stateData);
+        return Failure(this.stateData)
       case SUCCESS:
-        return Success(this.stateData);
+        return Success(this.stateData)
     }
   }
 
   isFinished() {
-    return this.isFailure() || this.isSuccess();
+    return this.isFailure() || this.isSuccess()
   }
 
   isPending() {
-    return this.state === PENDING;
+    return this.state === PENDING
   }
 
   isNotAsked() {
-    return this.state === NOT_ASKED;
+    return this.state === NOT_ASKED
   }
 
   isFailure() {
-    return this.state === FAILURE;
+    return this.state === FAILURE
   }
 
   isSuccess() {
-    return this.state === SUCCESS;
+    return this.state === SUCCESS
   }
 
   get data() {
     if (this.isFinished()) {
-      return this.stateData;
+      return this.stateData
     } else {
-      throw new Error('Cannot get data for request that hasn\'t finished');
+      throw new Error('Cannot get data for request that hasn\'t finished')
     }
   }
 
   get response() {
     if (this.isFinished()) {
-      return this.rawResponse;
+      return this.rawResponse
     } else {
-      throw new Error('Cannot get response for request that hasn\'t finished');
+      throw new Error('Cannot get response for request that hasn\'t finished')
     }
   }
 
@@ -102,18 +102,18 @@ class RemoteData {
     const newRemoteData = new this.constructor({
       ...this.config(),
       ...opts,
-    });
+    })
 
-    this.onChange(newRemoteData);
-    return newRemoteData;
+    this.onChange(newRemoteData)
+    return newRemoteData
   }
 
   fetch(...args) {
-    const reqUrl = typeof this.url === 'function' ? this.url(...args) : this.url;
-    this.makeNewAndOnChange({ state: PENDING });
+    const reqUrl = typeof this.url === 'function' ? this.url(...args) : this.url
+    this.makeNewAndOnChange({ state: PENDING })
 
-    return makeFetchRequest(this, reqUrl);
+    return makeFetchRequest(this, reqUrl)
   }
 }
 
-export default RemoteData;
+export default RemoteData
