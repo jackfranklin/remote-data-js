@@ -13,12 +13,14 @@
     "watch": "npm run jest -- --watch",
     "lint": "eslint src/*.js test/*.js"
   },
-  "keywords": [],
+  "keywords": [
+
+  ],
   "author": "Jack Franklin",
   "license": "MIT",
   "devDependencies": {
     "babel-cli": "6.9.0",
-    "babel-core": "^6.6.0",
+    "babel-core": "^6.24.1",
     "babel-jest": "15.0.0",
     "babel-loader": "^6.2.4",
     "babel-plugin-transform-object-rest-spread": "6.8.0",
