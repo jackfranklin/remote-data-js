@@ -13,7 +13,9 @@
     "watch": "npm run jest -- --watch",
     "lint": "eslint src/*.js test/*.js"
   },
-  "keywords": [],
+  "keywords": [
+
+  ],
   "author": "Jack Franklin",
   "license": "MIT",
   "devDependencies": {
@@ -32,6 +34,6 @@
     "fetch-mock": "4.5.4",
     "jest": "15.1.1",
     "webpack": "^1.12.14",
-    "webpack-notifier": "1.3.0"
+    "webpack-notifier": "1.5.0"
   }
 }
