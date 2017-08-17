@@ -17,7 +17,7 @@
   "author": "Jack Franklin",
   "license": "MIT",
   "devDependencies": {
-    "babel-cli": "6.9.0",
+    "babel-cli": "6.26.0",
     "babel-core": "^6.6.0",
     "babel-jest": "15.0.0",
     "babel-loader": "^6.2.4",
