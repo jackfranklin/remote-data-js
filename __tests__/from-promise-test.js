@@ -7,7 +7,7 @@ it('can be constructed from a promise and be in the loading state', () => {
   expect(remoteData.isPending()).toBe(true)
 })
 
-it('gives the data back when it succeeds', (done) => {
+it('gives the data back when it succeeds', done => {
   const onChange = res => {
     expect(res.isSuccess()).toEqual(true)
     expect(res.data).toEqual({ success: true })
@@ -18,7 +18,7 @@ it('gives the data back when it succeeds', (done) => {
   expect(remoteData.isPending()).toBe(true)
 })
 
-it('gives the error back when it fails', (done) => {
+it('gives the error back when it fails', done => {
   const onChange = res => {
     expect(res.isFailure()).toEqual(true)
     expect(res.data).toEqual({ error: true })
