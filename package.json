@@ -13,7 +13,9 @@
     "watch": "npm run jest --watch",
     "lint": "eslint src/*.js __tests__/*.js"
   },
-  "keywords": [],
+  "keywords": [
+
+  ],
   "author": "Jack Franklin",
   "license": "MIT",
   "devDependencies": {
@@ -35,6 +37,6 @@
     "jest": "15.1.1",
     "prettier": "^1.8.2",
     "webpack": "^1.12.14",
-    "webpack-notifier": "1.3.0"
+    "webpack-notifier": "1.5.0"
   }
 }
