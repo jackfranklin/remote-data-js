@@ -1,5 +1,6 @@
 {
-  "extends": "standard",
+  "extends": ["standard", "prettier"],
+  "plugins": ["prettier"],
   "globals": {
     "fetch": true,
     "describe": true,
@@ -9,6 +10,7 @@
   },
   "rules": {
     "space-before-function-paren": 0,
-    "comma-dangle": [2, "always-multiline"]
+    "comma-dangle": [2, "always-multiline"],
+    "prettier/prettier": "error"
   }
 }

@@ -1,22 +1,19 @@
-import {
-  NOT_ASKED,
-  PENDING,
-  FAILURE,
-  SUCCESS,
-} from './states'
+import { NOT_ASKED, PENDING, FAILURE, SUCCESS } from './states'
 
 import { makeFetchRequest } from './request'
 
 class RemoteData {
-  constructor({
-    url,
-    state = NOT_ASKED,
-    onChange = () => {},
-    parse = x => x.json(),
-    fetchOptions = {},
-    rawResponse,
-    stateData,
-  } = {}) {
+  constructor(
+    {
+      url,
+      state = NOT_ASKED,
+      onChange = () => {},
+      parse = x => x.json(),
+      fetchOptions = {},
+      rawResponse,
+      stateData,
+    } = {}
+  ) {
     this.state = state
     this.url = url
     this.onChange = onChange
@@ -37,7 +34,9 @@ class RemoteData {
       'onChange',
     ]
     const config = {}
-    keys.forEach(k => { config[k] = this[k] })
+    keys.forEach(k => {
+      config[k] = this[k]
+    })
     return config
   }
 
@@ -86,7 +85,7 @@ class RemoteData {
     if (this.isFinished()) {
       return this.stateData
     } else {
-      throw new Error('Cannot get data for request that hasn\'t finished')
+      throw new Error("Cannot get data for request that hasn't finished")
     }
   }
 
@@ -94,7 +93,7 @@ class RemoteData {
     if (this.isFinished()) {
       return this.rawResponse
     } else {
-      throw new Error('Cannot get response for request that hasn\'t finished')
+      throw new Error("Cannot get response for request that hasn't finished")
     }
   }
 

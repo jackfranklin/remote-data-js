@@ -20,9 +20,13 @@ const resetAndMockWithResponse = (url, response) => {
 }
 
 const makeInstance = (obj = {}) => {
-  const args = Object.assign({}, {
-    url: 'api.com/1',
-  }, obj)
+  const args = Object.assign(
+    {},
+    {
+      url: 'api.com/1',
+    },
+    obj
+  )
 
   return new RemoteData(args)
 }
@@ -226,7 +230,7 @@ describe('the case method', () => {
 
     resetAndMockSuccess('api.com/1')
 
-    return instance.fetch().then((newInstance) => {
+    return instance.fetch().then(newInstance => {
       expect(onChange.mock.calls.length).toBe(2)
       expect(newInstance.onChange).toBe(onChange)
     })

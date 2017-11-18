@@ -1,7 +1,4 @@
-import {
-  FAILURE,
-  SUCCESS,
-} from './states'
+import { FAILURE, SUCCESS } from './states'
 
 const checkStatus = response => {
   if (response.status >= 200 && response.status < 300) {
@@ -40,6 +37,8 @@ export const makeFetchRequest = (remoteDataInstance, url) => {
   return fetch(url, remoteDataInstance.fetchOptions)
     .then(checkStatus)
     .then(parseAndKeepResponse(remoteDataInstance.parse))
-    .then(([rawResponse, data]) => successfulResponse(remoteDataInstance, rawResponse, data))
+    .then(([rawResponse, data]) =>
+      successfulResponse(remoteDataInstance, rawResponse, data)
+    )
     .catch(error => failureResponse(remoteDataInstance, error.response, error))
 }
