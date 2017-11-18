@@ -24,6 +24,8 @@ it('gives the error back when it fails', done => {
     expect(res.data).toEqual({ error: true })
     done()
   }
+  /* eslint-disable prefer-promise-reject-errors */
   const prom = new Promise((resolve, reject) => reject({ error: true }))
+  /* eslint-enable prefer-promise-reject-errors */
   fromPromise(prom, { onChange })
 })

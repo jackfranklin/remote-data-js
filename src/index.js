@@ -42,6 +42,7 @@ class RemoteData {
 
   // the default implementations here call through to the _ function
   // which is called if the user does not provide a function
+  /* eslint-disable no-use-before-define */
   case({
     NotAsked = () => _(),
     Pending = () => _(),
@@ -49,6 +50,7 @@ class RemoteData {
     Success = (...args) => _(...args),
     _ = () => {},
   }) {
+    /* eslint-enable no-use-before-define */
     switch (this.state) {
       case NOT_ASKED:
         return NotAsked()
