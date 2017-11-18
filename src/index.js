@@ -115,4 +115,25 @@ class RemoteData {
   }
 }
 
+export const fromPromise = (promise, { onChange = () => {} } = {}) => {
+  const instance = new RemoteData({ onChange, state: PENDING })
+
+  promise.then(
+    result => {
+      return instance.makeNewAndOnChange({
+        state: SUCCESS,
+        stateData: result,
+      })
+    },
+    error => {
+      return instance.makeNewAndOnChange({
+        state: FAILURE,
+        stateData: error,
+      })
+    }
+  )
+
+  return instance
+}
+
 export default RemoteData
