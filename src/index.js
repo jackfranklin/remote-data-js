@@ -3,17 +3,15 @@ import { NOT_ASKED, PENDING, FAILURE, SUCCESS } from './states'
 import { makeFetchRequest } from './request'
 
 class RemoteData {
-  constructor(
-    {
-      url,
-      state = NOT_ASKED,
-      onChange = () => {},
-      parse = x => x.json(),
-      fetchOptions = {},
-      rawResponse,
-      stateData,
-    } = {}
-  ) {
+  constructor({
+    url,
+    state = NOT_ASKED,
+    onChange = () => {},
+    parse = x => x.json(),
+    fetchOptions = {},
+    rawResponse,
+    stateData,
+  } = {}) {
     this.state = state
     this.url = url
     this.onChange = onChange
