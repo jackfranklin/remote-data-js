@@ -149,3 +149,18 @@ githubPerson.fetch('jackfranklin').then(data => {
 You can call `.data` on a request to access the data, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
 
 You can call `.response` on a request to access the response, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
+
+## Making remote data instances from a promise.
+
+Let's say you have your own custom API library in your app for making API requests that returns promises. In this instance, you don't want to use RemoteData's own `fetch` based API to initiate the request, but instead you want to wrap your promise in a `RemoteData` instance:
+
+```js
+import { fromPromise } from 'remote-data-js'
+import myCustomApiRequestLib from 'my-custom-lib'
+
+const onChange = newRemoteData => {...}
+
+const apiRequest = myCustomApiRequestLib('/foo')
+const remoteDataInstance = fromPromise(apiRequest, { onChange })
+remoteDataInstance.isPending() // => true
+```
