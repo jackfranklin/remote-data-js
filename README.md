@@ -18,16 +18,16 @@ A typical app might model the data as:
 { loading: true, data: undefined }
 ```
 
-And then update the values when the request succeeeds. However, this really is one piece of information that is now represented across two keys, and as such it can become out of sync.
+And then update the values when the request succeeds. However, this really is one piece of information that is now represented across two keys, and as such it can become out of sync.
 
 Instead, `RemoteData` models both the _request_ and the _data_ in one object, so they can never be out of sync with each other.
 
 A `RemoteData` instance has one of four states:
 
-- `NOT_ASKED` - you've got started the request yet
-- `PENDING` - the request is in flight
-- `SUCCESS` - we have data from the request
-- `FAILURE` - the request went wrong, we have an error for it
+* `NOT_ASKED` - you've got started the request yet
+* `PENDING` - the request is in flight
+* `SUCCESS` - we have data from the request
+* `FAILURE` - the request went wrong, we have an error for it
 
 You can check the status of a `RemoteData` instance and therefore represent data in your application accordingly.
 
@@ -36,32 +36,31 @@ Additionally, `RemoteData` instances are _never_ mutated, but pass a new version
 ## Example
 
 ```js
-import RemoteData from 'remote-data';
+import RemoteData from 'remote-data'
 
 const githubPerson = new RemoteData({
   url: username => `https://api.github.com/users/${username}`,
-  onChange: remoteData => console.log('State changed!', remoteData)
-});
+  onChange: remoteData => console.log('State changed!', remoteData),
+})
 
 // then later on
 
-githubPerson.fetch('jackfranklin').then((remoteData) => {
-  // it worked fine
-  console.log(remoteData.isSuccess()) // true
-  console.log(remoteData.data) // github api data
-  console.log(remoteData.response.status) // 200
-}).catch((remoteData) => {
-  // something went wrong
-  console.log(remoteData.isSuccess()) // false
-  console.log(remoteData.isFailure()) // true
-  console.log(remoteData.data) // error info
-  console.log(remoteData.response.status) // response status code
-});
+githubPerson
+  .fetch('jackfranklin')
+  .then(remoteData => {
+    // it worked fine
+    console.log(remoteData.isSuccess()) // true
+    console.log(remoteData.data) // github api data
+    console.log(remoteData.response.status) // 200
+  })
+  .catch(remoteData => {
+    // something went wrong
+    console.log(remoteData.isSuccess()) // false
+    console.log(remoteData.isFailure()) // true
+    console.log(remoteData.data) // error info
+    console.log(remoteData.response.status) // response status code
+  })
 ```
-
-## JSBin Example
-
-You can also [view this JSBin example](http://jsbin.com/xetecikeni/edit?js,output) which shows how to use `RemoteData`.
 
 ## API
 
@@ -80,13 +79,13 @@ const instance = new RemoteData({
 
 These are fully documented below:
 
-- `url: String | Function`: if given a string, this will be the URL that the request is made to. If it's a function it will be called when `fetch` is called, passing any arguments through. For example, `remoteData.fetch('jack')` will call the `url` function, passing `jack` as the argument.
+* `url: String | Function`: if given a string, this will be the URL that the request is made to. If it's a function it will be called when `fetch` is called, passing any arguments through. For example, `remoteData.fetch('jack')` will call the `url` function, passing `jack` as the argument.
 
-- `onChange: Function`: a function called whenever the state of a remote data instance changes. This is passed in the new RemoteData instance.
+* `onChange: Function`: a function called whenever the state of a remote data instance changes. This is passed in the new RemoteData instance.
 
-- `parse: Function`: a function used to parse the `Response` from the HTTP request. Defaults to `response.json()`.
+* `parse: Function`: a function used to parse the `Response` from the HTTP request. Defaults to `response.json()`.
 
-- `fetchOptions: Object`: an object that is passed through to `fetch` and allows you to configure headers and any other request options.
+* `fetchOptions: Object`: an object that is passed through to `fetch` and allows you to configure headers and any other request options.
 
 ### Making Requests
 
@@ -95,8 +94,8 @@ To make a request, call `fetch` on the `RemoteData` instance:
 ```js
 const githubPerson = new RemoteData({
   url: name => `https://api.github.com/users/${username}`,
-  onChange: newGithubPerson => console.log(newGithubPerson)
-});
+  onChange: newGithubPerson => console.log(newGithubPerson),
+})
 
 githubPerson.fetch('jackfranklin')
 ```
@@ -108,18 +107,18 @@ githubPerson.fetch('jackfranklin').then(newData => {
   console.log(newData.data) // GitHub API data, parsed from JSON
   console.log(newData.response.status) // status code
   console.log(newData.state) // 'SUCCESS'
-});
+})
 ```
 
 ### Checking the status of a request
 
 You can call any of the following methods:
 
-- `isFinished()` : true if a request has succeeded or failed.
-- `isNotAsked()` : true if the request hasn't been asked for (this is the default state).
-- `isPending()`
-- `isFailure()`
-- `isSuccess()`
+* `isFinished()` : true if a request has succeeded or failed.
+* `isNotAsked()` : true if the request hasn't been asked for (this is the default state).
+* `isPending()`
+* `isFailure()`
+* `isSuccess()`
 
 You can "switch" on a RemoteData instance's state similarly to functional languages and the JavaScript [Union Type](https://www.npmjs.com/package/union-type) package:
 
@@ -128,10 +127,10 @@ githubPerson.fetch('jackfranklin').then(data => {
   const message = data.case({
     NotAsked: () => 'Initializing...',
     Pending: () => 'Loading...',
-    Success: (data) => renderData(data),
-    Failure: (error) => renderError(error)
-  });
-});
+    Success: data => renderData(data),
+    Failure: error => renderError(error),
+  })
+})
 ```
 
 If you don't handle all four possible states, you must include a default handler named `_`
@@ -140,11 +139,11 @@ If you don't handle all four possible states, you must include a default handler
 ```js
 githubPerson.fetch('jackfranklin').then(data => {
   const message = data.case({
-    Success: (data) => renderData(data),
-    Failure: (error) => renderError(error),
-    _: () => 'Loading...'
-  });
-});
+    Success: data => renderData(data),
+    Failure: error => renderError(error),
+    _: () => 'Loading...',
+  })
+})
 ```
 
 You can call `.data` on a request to access the data, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
