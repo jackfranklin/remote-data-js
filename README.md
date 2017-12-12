@@ -1,6 +1,9 @@
 # RemoteData.js
 
-Inspired by Kris Jenkins' [RemoteData](http://package.elm-lang.org/packages/krisajenkins/elm-exts/25.1.0/Exts-RemoteData) Elm package, this library provides an object for representing remote data in your application.
+Inspired by Kris Jenkins'
+[RemoteData](http://package.elm-lang.org/packages/krisajenkins/elm-exts/25.1.0/Exts-RemoteData)
+Elm package, this library provides an object for representing remote data in
+your application.
 
 [![Build Status](https://travis-ci.org/jackfranklin/remote-data-js.svg?branch=master)](https://travis-ci.org/jackfranklin/remote-data-js)
 
@@ -10,7 +13,8 @@ npm install --save remote-data-js
 
 ## Motivations
 
-By representing the data and the state of the request in one object it becomes impossible for you to have data that's out of sync.
+By representing the data and the state of the request in one object it becomes
+impossible for you to have data that's out of sync.
 
 A typical app might model the data as:
 
@@ -18,9 +22,12 @@ A typical app might model the data as:
 { loading: true, data: undefined }
 ```
 
-And then update the values when the request succeeds. However, this really is one piece of information that is now represented across two keys, and as such it can become out of sync.
+And then update the values when the request succeeds. However, this really is
+one piece of information that is now represented across two keys, and as such it
+can become out of sync.
 
-Instead, `RemoteData` models both the _request_ and the _data_ in one object, so they can never be out of sync with each other.
+Instead, `RemoteData` models both the _request_ and the _data_ in one object, so
+they can never be out of sync with each other.
 
 A `RemoteData` instance has one of four states:
 
@@ -29,9 +36,13 @@ A `RemoteData` instance has one of four states:
 * `SUCCESS` - we have data from the request
 * `FAILURE` - the request went wrong, we have an error for it
 
-You can check the status of a `RemoteData` instance and therefore represent data in your application accordingly.
+You can check the status of a `RemoteData` instance and therefore represent data
+in your application accordingly.
 
-Additionally, `RemoteData` instances are _never_ mutated, but pass a new version of themselves through callbacks. This means any mutation bugs with rendering off your remote data instances are not a concern, and that this library can play nicely with React, Redux and others.
+Additionally, `RemoteData` instances are _never_ mutated, but pass a new version
+of themselves through callbacks. This means any mutation bugs with rendering off
+your remote data instances are not a concern, and that this library can play
+nicely with React, Redux and others.
 
 ## Example
 
@@ -66,7 +77,8 @@ githubPerson
 
 ### Creating `RemoteData` instances
 
-The configuration you can provide when creating a new instance of RemoteData are as follows:
+The configuration you can provide when creating a new instance of RemoteData are
+as follows:
 
 ```js
 const instance = new RemoteData({
@@ -79,13 +91,19 @@ const instance = new RemoteData({
 
 These are fully documented below:
 
-* `url: String | Function`: if given a string, this will be the URL that the request is made to. If it's a function it will be called when `fetch` is called, passing any arguments through. For example, `remoteData.fetch('jack')` will call the `url` function, passing `jack` as the argument.
+* `url: String | Function`: if given a string, this will be the URL that the
+  request is made to. If it's a function it will be called when `fetch` is
+  called, passing any arguments through. For example, `remoteData.fetch('jack')`
+  will call the `url` function, passing `jack` as the argument.
 
-* `onChange: Function`: a function called whenever the state of a remote data instance changes. This is passed in the new RemoteData instance.
+* `onChange: Function`: a function called whenever the state of a remote data
+  instance changes. This is passed in the new RemoteData instance.
 
-* `parse: Function`: a function used to parse the `Response` from the HTTP request. Defaults to `response.json()`.
+* `parse: Function`: a function used to parse the `Response` from the HTTP
+  request. Defaults to `response.json()`.
 
-* `fetchOptions: Object`: an object that is passed through to `fetch` and allows you to configure headers and any other request options.
+* `fetchOptions: Object`: an object that is passed through to `fetch` and allows
+  you to configure headers and any other request options.
 
 ### Making Requests
 
@@ -100,7 +118,8 @@ const githubPerson = new RemoteData({
 githubPerson.fetch('jackfranklin')
 ```
 
-A promise is returned and the value it will resolve to is the new `RemoteData` instance:
+A promise is returned and the value it will resolve to is the new `RemoteData`
+instance:
 
 ```js
 githubPerson.fetch('jackfranklin').then(newData => {
@@ -115,12 +134,15 @@ githubPerson.fetch('jackfranklin').then(newData => {
 You can call any of the following methods:
 
 * `isFinished()` : true if a request has succeeded or failed.
-* `isNotAsked()` : true if the request hasn't been asked for (this is the default state).
-* `isPending()`
-* `isFailure()`
-* `isSuccess()`
+* `isNotAsked()` : true if the request hasn't been asked for (this is the
+  default state).
+* `isPending()` : true if the request has been started but is pending
+* `isFailure()` : true if the request has failed
+* `isSuccess()` : true if the request has succeeded
 
-You can "switch" on a RemoteData instance's state similarly to functional languages and the JavaScript [Union Type](https://www.npmjs.com/package/union-type) package:
+You can "switch" on a RemoteData instance's state similarly to functional
+languages and the JavaScript
+[Union Type](https://www.npmjs.com/package/union-type) package:
 
 ```js
 githubPerson.fetch('jackfranklin').then(data => {
@@ -133,8 +155,8 @@ githubPerson.fetch('jackfranklin').then(data => {
 })
 ```
 
-If you don't handle all four possible states, you must include a default handler named `_`
-(underscore):
+If you don't handle all four possible states, you must include a default handler
+named `_` (underscore):
 
 ```js
 githubPerson.fetch('jackfranklin').then(data => {
@@ -146,13 +168,18 @@ githubPerson.fetch('jackfranklin').then(data => {
 })
 ```
 
-You can call `.data` on a request to access the data, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
+You can call `.data` on a request to access the data, but be aware that this
+_will throw an error_ if the request hasn't been asked for or is pending.
 
-You can call `.response` on a request to access the response, but be aware that this _will throw an error_ if the request hasn't been asked for or is pending.
+You can call `.response` on a request to access the response, but be aware that
+this _will throw an error_ if the request hasn't been asked for or is pending.
 
 ## Making remote data instances from a promise.
 
-Let's say you have your own custom API library in your app for making API requests that returns promises. In this instance, you don't want to use RemoteData's own `fetch` based API to initiate the request, but instead you want to wrap your promise in a `RemoteData` instance:
+Let's say you have your own custom API library in your app for making API
+requests that returns promises. In this instance, you don't want to use
+RemoteData's own `fetch` based API to initiate the request, but instead you want
+to wrap your promise in a `RemoteData` instance:
 
 ```js
 import { fromPromise } from 'remote-data-js'
