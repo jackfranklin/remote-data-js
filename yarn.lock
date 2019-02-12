@@ -456,12 +456,12 @@ babel-jest@^21.2.0:
     babel-plugin-istanbul "^4.0.0"
     babel-preset-jest "^21.2.0"
 
-babel-jest@^22.0.1:
-  version "22.0.1"
-  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-22.0.1.tgz#4232ded3a11ff8cad2d4417c5f75eaecdb2a73a5"
+babel-jest@^23.6.0:
+  version "23.6.0"
+  resolved "https://registry.yarnpkg.com/babel-jest/-/babel-jest-23.6.0.tgz#a644232366557a2240a0c083da6b25786185a2f1"
   dependencies:
-    babel-plugin-istanbul "^4.1.5"
-    babel-preset-jest "^22.0.1"
+    babel-plugin-istanbul "^4.1.6"
+    babel-preset-jest "^23.2.0"
 
 babel-messages@^6.23.0:
   version "6.23.0"
@@ -475,21 +475,22 @@ babel-plugin-check-es2015-constants@^6.22.0:
   dependencies:
     babel-runtime "^6.22.0"
 
-babel-plugin-istanbul@^4.0.0, babel-plugin-istanbul@^4.1.5:
-  version "4.1.5"
-  resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.5.tgz#6760cdd977f411d3e175bb064f2bc327d99b2b6e"
+babel-plugin-istanbul@^4.0.0, babel-plugin-istanbul@^4.1.6:
+  version "4.1.6"
+  resolved "https://registry.yarnpkg.com/babel-plugin-istanbul/-/babel-plugin-istanbul-4.1.6.tgz#36c59b2192efce81c5b378321b74175add1c9a45"
   dependencies:
+    babel-plugin-syntax-object-rest-spread "^6.13.0"
     find-up "^2.1.0"
-    istanbul-lib-instrument "^1.7.5"
-    test-exclude "^4.1.1"
+    istanbul-lib-instrument "^1.10.1"
+    test-exclude "^4.2.1"
 
 babel-plugin-jest-hoist@^21.2.0:
   version "21.2.0"
   resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-21.2.0.tgz#2cef637259bd4b628a6cace039de5fcd14dbb006"
 
-babel-plugin-jest-hoist@^22.0.1:
-  version "22.0.1"
-  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-22.0.1.tgz#e5a65a213158d6c523686c542124591e29a35d47"
+babel-plugin-jest-hoist@^23.2.0:
+  version "23.2.0"
+  resolved "https://registry.yarnpkg.com/babel-plugin-jest-hoist/-/babel-plugin-jest-hoist-23.2.0.tgz#e61fae05a1ca8801aadee57a6d66b8cefaf44167"
 
 babel-plugin-syntax-object-rest-spread@^6.13.0, babel-plugin-syntax-object-rest-spread@^6.8.0:
   version "6.13.0"
@@ -727,11 +728,11 @@ babel-preset-jest@^21.2.0:
     babel-plugin-jest-hoist "^21.2.0"
     babel-plugin-syntax-object-rest-spread "^6.13.0"
 
-babel-preset-jest@^22.0.1:
-  version "22.0.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-22.0.1.tgz#e94c3f8d701502d233da6c63925cb6d938d3771f"
+babel-preset-jest@^23.2.0:
+  version "23.2.0"
+  resolved "https://registry.yarnpkg.com/babel-preset-jest/-/babel-preset-jest-23.2.0.tgz#8ec7a03a138f001a1a8fb1e8113652bf1a55da46"
   dependencies:
-    babel-plugin-jest-hoist "^22.0.1"
+    babel-plugin-jest-hoist "^23.2.0"
     babel-plugin-syntax-object-rest-spread "^6.13.0"
 
 babel-register@6.9.0, babel-register@^6.9.0:
@@ -2135,13 +2136,29 @@ istanbul-lib-coverage@^1.0.1, istanbul-lib-coverage@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-1.1.1.tgz#73bfb998885299415c93d38a3e9adf784a77a9da"
 
+istanbul-lib-coverage@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/istanbul-lib-coverage/-/istanbul-lib-coverage-1.2.1.tgz#ccf7edcd0a0bb9b8f729feeb0930470f9af664f0"
+
 istanbul-lib-hook@^1.1.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/istanbul-lib-hook/-/istanbul-lib-hook-1.1.0.tgz#8538d970372cb3716d53e55523dd54b557a8d89b"
   dependencies:
     append-transform "^0.4.0"
 
-istanbul-lib-instrument@^1.4.2, istanbul-lib-instrument@^1.7.5, istanbul-lib-instrument@^1.9.1:
+istanbul-lib-instrument@^1.10.1:
+  version "1.10.2"
+  resolved "https://registry.yarnpkg.com/istanbul-lib-instrument/-/istanbul-lib-instrument-1.10.2.tgz#1f55ed10ac3c47f2bdddd5307935126754d0a9ca"
+  dependencies:
+    babel-generator "^6.18.0"
+    babel-template "^6.16.0"
+    babel-traverse "^6.18.0"
+    babel-types "^6.18.0"
+    babylon "^6.18.0"
+    istanbul-lib-coverage "^1.2.1"
+    semver "^5.3.0"
+
+istanbul-lib-instrument@^1.4.2, istanbul-lib-instrument@^1.9.1:
   version "1.9.1"
   resolved "https://registry.yarnpkg.com/istanbul-lib-instrument/-/istanbul-lib-instrument-1.9.1.tgz#250b30b3531e5d3251299fdd64b0b2c9db6b558e"
   dependencies:
@@ -3773,9 +3790,9 @@ tar@^2.2.1, tar@~2.2.1:
     fstream "^1.0.2"
     inherits "2"
 
-test-exclude@^4.1.1:
-  version "4.1.1"
-  resolved "https://registry.yarnpkg.com/test-exclude/-/test-exclude-4.1.1.tgz#4d84964b0966b0087ecc334a2ce002d3d9341e26"
+test-exclude@^4.2.1:
+  version "4.2.3"
+  resolved "https://registry.yarnpkg.com/test-exclude/-/test-exclude-4.2.3.tgz#a9a5e64474e4398339245a0a769ad7c2f4a97c20"
   dependencies:
     arrify "^1.0.1"
     micromatch "^2.3.11"
