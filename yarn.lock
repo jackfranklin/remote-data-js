@@ -1307,8 +1307,8 @@ eslint-config-standard@^10.2.1:
   resolved "https://registry.yarnpkg.com/eslint-config-standard/-/eslint-config-standard-10.2.1.tgz#c061e4d066f379dc17cd562c64e819b4dd454591"
 
 eslint-config-unobtrusive@^1.2.1:
-  version "1.2.1"
-  resolved "https://registry.yarnpkg.com/eslint-config-unobtrusive/-/eslint-config-unobtrusive-1.2.1.tgz#d78108c03f1a2ba3ff3b723a58c293202e6deecc"
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/eslint-config-unobtrusive/-/eslint-config-unobtrusive-1.2.3.tgz#4567a80e112b08e57cea515eba58cbd11320d2ee"
 
 eslint-import-resolver-node@^0.3.1:
   version "0.3.1"
